@@ -1,6 +1,4 @@
-
-<img width="2543" height="1387" alt="Screenshot 2026-02-17 100829" src="https://github.com/user-attachments/assets/0d00773c-1fe1-43e8-9085-53e44124e765" />
-
+<img width="2543" height="1387" alt="Architecture png" src="https://github.com/user-attachments/assets/f750c178-9ede-4a20-824c-c76db09697f9" />
 
 ## DevOps Architect AI – SaaS Platform
 
@@ -121,30 +119,89 @@ Services:
   - Proxies `/api/` to the backend service (`backend:4000`)
   - Enables gzip & sensible defaults for production
 
-To deploy to a cloud provider:
+## ☁️ Deployment on AWS (Docker Compose)
 
-1. Build and push images to a registry:
+This project is deployed on AWS using Docker Compose in a production-like environment.
+
+### Deployment setup
+
+- **Cloud**: AWS EC2 (Ubuntu)
+- **Containerization**: Docker + Docker Compose
+- **Reverse Proxy**: Nginx
+- **Ports**:
+  - Frontend → 3000
+  - Backend → 4000
+
+### Steps
+
+1. Launch EC2 & allow ports `3000`, `4000`, `22` , `80`
+
+2. Install Docker
 
 ```bash
-docker compose build
-docker tag devops-arch-backend <registry>/devops-arch-backend:latest
-docker tag devops-arch-frontend <registry>/devops-arch-frontend:latest
-docker push <registry>/devops-arch-backend:latest
-docker push <registry>/devops-arch-frontend:latest
+sudo apt-get update
+sudo apt-get install docker.io -y
+sudo apt-get install docker-compose-v2 
 ```
 
-2. Provision a small Kubernetes or ECS cluster using the generated Terraform as a starting point.
-3. Point your domain at the frontend service / load balancer; ensure backend and databases are reachable and secured.
+3. Clone repo
 
-### CloudWatch & observability (ready hooks)
+```bash
+git clone <https://github.com/Sumantswain/AI-Powered-Devops-Architecture-Generator.git>
+cd AI-Powered-Devops-Architecture-Generator/
+```
 
-- Backend is structured to easily add:
-  - Request logging middleware that ships logs to CloudWatch Logs
-  - Metrics export (e.g., via CloudWatch Embedded Metrics Format)
-- Add a CloudWatch agent sidecar or Fluent Bit to ship container logs in production.
+4. Setup env
 
-### Notes
+```bash
+cp .env.example .env
+```
 
-- The AI engine is implemented as a composable `AiEngine` class which can be wired to a real LLM provider using `AI_PROVIDER`, `AI_API_KEY` and `AI_MODEL`.
-- SaaS subscription logic is modeled via the `plan` field (`free` / `pro`) on users and enforced at the API layer; extend this to integrate Stripe or other billing providers.
+5. Run app
+
+```bash
+docker compose up -d --build 
+```
+
+### Access
+
+- Frontend → `http://<EC2-IP>:3000`
+- Backend → `http://<EC2-IP>:4000/api`
+
+---
+
+## 🏗️ Architecture
+
+3-tier architecture:
+
+- **Frontend** → React + Nginx  
+- **Backend** → Node.js API  
+- **Database** → PostgreSQL + Redis  
+
+---
+
+## 📊 Observability (ready)
+
+- CloudWatch logs integration ready  
+- Metrics export supported  
+- Can integrate Fluent Bit / logging agents  
+
+---
+
+## 🧠 Notes
+
+- AI engine is modular and LLM-ready  
+- Supports SaaS plan system (Free vs Pro)  
+- Easily extendable with Stripe billing  
+- Can be scaled to ECS / Kubernetes  
+
+---
+
+## ⭐ Highlights
+
+- AI-powered DevOps automation platform  
+- Generates AWS architecture + Terraform + CI/CD  
+- Fully containerized deployment  
+- Production-ready SaaS dashboard  
+- Deployed on AWS using Docker Compose  
 
