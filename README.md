@@ -1,3 +1,7 @@
+
+<img width="2543" height="1387" alt="Screenshot 2026-02-17 100829" src="https://github.com/user-attachments/assets/0d00773c-1fe1-43e8-9085-53e44124e765" />
+
+
 ## DevOps Architect AI – SaaS Platform
 
 AI-powered DevOps architecture generator that produces AWS reference architectures, Terraform, CI/CD pipelines, and cost estimates with an enterprise-grade dashboard UI.
